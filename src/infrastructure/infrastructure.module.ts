@@ -1,7 +1,14 @@
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { Module } from '@nestjs/common';
-import { CacheModule } from './cache/cache.module';
+
+import TypeOrmConfig from 'src/common/config/type.orm.config';
+import RedisConfig from 'src/common/config/redis.config';
 
 @Module({
-  imports: [CacheModule],
+  imports: [
+    TypeOrmModule.forRootAsync(TypeOrmConfig.asProvider()),
+    RedisModule.forRootAsync(RedisConfig.asProvider()),
+  ],
 })
 export class InfrastructureModule {}
