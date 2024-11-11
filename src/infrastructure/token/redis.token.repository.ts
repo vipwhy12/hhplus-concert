@@ -1,7 +1,10 @@
-import { RedisService } from '@liaoliaots/nestjs-redis';
 import { Inject } from '@nestjs/common';
-import Redis from 'ioredis';
+import { RedisService } from '@liaoliaots/nestjs-redis';
 import { TokenRepository } from 'src/domain/token/token.repository';
+import { WAITING_TOKEN_KEY } from 'src/domain/token/constants/token.constant';
+import { WaitingToken } from 'src/domain/token/dtos/waiting.token.dto';
+
+import Redis from 'ioredis';
 
 export class RedisTokenRepository implements TokenRepository {
   private readonly client: Redis;
@@ -11,17 +14,14 @@ export class RedisTokenRepository implements TokenRepository {
     this.client = this.redisService.getOrThrow();
   }
 
-  async createWaitingToken({
-    userId,
-    date,
-    WAITING_TOKEN_KEY,
-  }): Promise<number> {
-    const result = await this.client.zadd(
-      WAITING_TOKEN_KEY,
-      date.getTime(),
-      userId,
-    );
+  async createWaitingToken(token: WaitingToken): Promise<number> {
+    try {
+      const { userId, date, tokenKey } = token;
 
-    return result;
+      return await this.client.zadd(tokenKey, date.getTime(), userId);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to create waiting token in Redis');
+    }
   }
 }
