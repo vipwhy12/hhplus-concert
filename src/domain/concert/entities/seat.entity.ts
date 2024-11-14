@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
+@Entity({ name: 'seats' })
 export class SeatEntity extends BaseEntity {
   @Column({ default: false })
   isReserved: boolean;

@@ -1,9 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { registerAs } from '@nestjs/config';
+import { join } from 'path';
 
-export default registerAs(
-  'database',
-  (): TypeOrmModuleOptions => ({
+export default registerAs('database', (): TypeOrmModuleOptions => {
+  const __basedir = join(__dirname, '../../');
+  const entitiesPath = __basedir + '/domain/*/entities/*.entity{.ts,.js}';
+
+  return {
     type: 'mysql',
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT) || 3306,
@@ -12,6 +15,7 @@ export default registerAs(
     database: process.env.DB_NAME,
     logging: true,
     charset: 'utf8mb4',
-    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  }),
-);
+    entities: [entitiesPath],
+    synchronize: true,
+  };
+});
