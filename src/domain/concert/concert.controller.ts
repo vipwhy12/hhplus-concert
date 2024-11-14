@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ConcertService } from './concert.service';
 import { ConcertFindResponseDto } from './dtos/response/concert.find.response.dto';
 
-@Controller('concert')
+@Controller('concerts')
 export class ConcertController {
   constructor(private readonly concertService: ConcertService) {}
 
