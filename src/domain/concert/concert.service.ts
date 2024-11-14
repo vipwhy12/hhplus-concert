@@ -17,4 +17,8 @@ export class ConcertService {
       (concert: ConcertEntity) => new ConcertFindResponseDto(concert),
     );
   }
+
+  async reservableConcertSession(concertId: number) {
+    return await this.concertRepository.getReservableConcertSession(concertId);
+  }
 }
