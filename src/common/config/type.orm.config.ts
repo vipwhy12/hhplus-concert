@@ -16,6 +16,6 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     logging: true,
     charset: 'utf8mb4',
     entities: [entitiesPath],
-    synchronize: true,
+    // synchronize: true,
   };
 });
