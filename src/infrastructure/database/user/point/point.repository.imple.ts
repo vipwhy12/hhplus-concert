@@ -2,16 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PointEntity } from 'src/domain/user/points/entities/point.entity';
 import { PointsRepository } from 'src/domain/user/points/points.repository';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class PointsRepositoryImple implements PointsRepository {
   constructor(
     @InjectRepository(PointEntity)
-    private readonly user: Repository<PointEntity>,
+    private readonly point: Repository<PointEntity>,
   ) {}
 
-  async findPointByUserId(id: number) {
-    return this.user.find({ where: { id } });
+  async findByUserId(id: number, manager?: EntityManager) {
+    const pointRepository = manager
+      ? manager.getRepository(PointEntity)
+      : this.point;
+
+    return pointRepository.findOne({ where: { id } });
+  }
+
+  async update(userId: number, balance: number, manager?: EntityManager) {
+    const pointRepository = manager
+      ? manager.getRepository(PointEntity)
+      : this.point;
+
+    return pointRepository.update({ userId }, { balance });
   }
 }
