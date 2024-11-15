@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ConcertRepository } from 'src/domain/concert/concert.repository';
 import { ConcertEntity } from 'src/domain/concert/entities/concert.entity';
 import { ConcertSessionEntity } from 'src/domain/concert/entities/concert.session.entity';
-import { Repository } from 'typeorm';
+import { SeatEntity } from 'src/domain/concert/entities/seat.entity';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class ConcertRepositoryImpl implements ConcertRepository {
@@ -12,16 +13,26 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     private readonly concert: Repository<ConcertEntity>,
     @InjectRepository(ConcertSessionEntity)
     private readonly concertSessions: Repository<ConcertSessionEntity>,
+    @InjectRepository(SeatEntity)
+    private readonly seat: Repository<SeatEntity>,
   ) {}
 
-  insert(
-    concert: Record<string, import('nestjs-seeder').FactoryValue>[],
-  ): Promise<any> {
-    return this.concert.save(concert);
+  getSeatById(id: number, manager?: EntityManager) {
+    const sessionRepository = manager
+      ? manager.getRepository(SeatEntity)
+      : this.seat;
+
+    return sessionRepository.findOne({
+      where: { id },
+    });
   }
 
-  delete(arg0: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  updateSeatStatus(id: number, isReserved: boolean, manager: EntityManager) {
+    const sessionRepository = manager
+      ? manager.getRepository(SeatEntity)
+      : this.seat;
+
+    return sessionRepository.update({ id }, { isReserved });
   }
 
   async getConcerts(): Promise<ConcertEntity[]> {
@@ -32,5 +43,19 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     return this.concertSessions.find({
       where: { concertId },
     });
+  }
+
+  /*
+    Dummy Data
+  */
+
+  insert(
+    concert: Record<string, import('nestjs-seeder').FactoryValue>[],
+  ): Promise<any> {
+    return this.concert.save(concert);
+  }
+
+  delete(arg0: any): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }

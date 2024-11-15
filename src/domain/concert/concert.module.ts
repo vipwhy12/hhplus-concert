@@ -20,6 +20,6 @@ import { ConcertSessionEntity } from './entities/concert.session.entity';
     },
   ],
   controllers: [ConcertController],
-  exports: [CONCERT_REPOSITORY],
+  exports: [ConcertService, CONCERT_REPOSITORY],
 })
 export class ConcertModule {}
