@@ -1,0 +1,11 @@
+import { BaseEntity } from 'src/common/entities/base.entity';
+import { Column, Entity } from 'typeorm';
+
+@Entity('points')
+export class PointEntity extends BaseEntity {
+  @Column({ type: 'bigint', default: 0 })
+  balance: number;
+
+  @Column({ type: 'int', nullable: false })
+  userId: number;
+}
