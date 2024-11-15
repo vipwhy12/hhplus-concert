@@ -11,7 +11,7 @@ export class PointsRepositoryImple implements PointsRepository {
     private readonly user: Repository<PointEntity>,
   ) {}
 
-  async getMyPoint(id: number) {
+  async findPointByUserId(id: number) {
     return this.user.find({ where: { id } });
   }
 }

@@ -10,6 +10,6 @@ export class PointsService {
 
   async getMyPoint(id: string) {
     const userId = Number(id);
-    return await this.pointsRepository.getMyPoint(userId);
+    return await this.pointsRepository.findPointByUserId(userId);
   }
 }
