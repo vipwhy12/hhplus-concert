@@ -3,7 +3,7 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('points')
 export class PointEntity extends BaseEntity {
-  @Column({ type: 'bigint', default: 0 })
+  @Column({ type: 'int', default: 0 })
   balance: number;
 
   @Column({ type: 'int', nullable: false })
