@@ -5,6 +5,8 @@ import { join } from 'path';
 export default registerAs('database', (): TypeOrmModuleOptions => {
   const __basedir = join(__dirname, '../../');
   const entitiesPath = __basedir + '/domain/*/entities/*.entity{.ts,.js}';
+  const submoduleEntitiesPath =
+    __basedir + '/domain/*/*/entities/*.entity{.ts,.js}';
 
   return {
     type: 'mysql',
@@ -15,7 +17,7 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     database: process.env.DB_NAME,
     logging: true,
     charset: 'utf8mb4',
-    entities: [entitiesPath],
+    entities: [entitiesPath, submoduleEntitiesPath],
     // synchronize: true,
   };
 });
