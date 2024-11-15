@@ -16,6 +16,9 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     logging: true,
     charset: 'utf8mb4',
     entities: [entitiesPath],
+    extra: {
+      connectionLimit: 50, // 연결 풀 크기를 적절히 설정
+    },
     // synchronize: true,
   };
 });

@@ -16,5 +16,6 @@ import { UsersEntity } from './entities/user.entity';
       useClass: UserRepositoryImple,
     },
   ],
+  exports: [USER_REPOSITORY],
 })
 export class UserModule {}

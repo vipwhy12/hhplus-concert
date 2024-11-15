@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import {
   CONCERT_REPOSITORY,
   ConcertRepository,
@@ -13,13 +14,16 @@ export class ConcertSeeder implements Seeder {
   constructor(
     @Inject(CONCERT_REPOSITORY)
     private readonly concertRepository: ConcertRepository,
+    private readonly configService: ConfigService,
   ) {}
 
   async seed() {
-    const concert = DataFactory.createForClass(ConcertEntity).generate(100);
-    const seat = DataFactory.createForClass(SeatEntity).generate(100);
+    const dataCount = this.configService.get<number>('SEED_DATA_COUNT');
+    const seat = DataFactory.createForClass(SeatEntity).generate(dataCount);
+    const concert =
+      DataFactory.createForClass(ConcertEntity).generate(dataCount);
     const session =
-      DataFactory.createForClass(ConcertSessionEntity).generate(100);
+      DataFactory.createForClass(ConcertSessionEntity).generate(dataCount);
 
     await this.concertRepository.insertConcert(concert);
     await this.concertRepository.insertSession(session);

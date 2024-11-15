@@ -5,6 +5,8 @@ import { ConcertEntity } from 'src/domain/concert/entities/concert.entity';
 import { ConcertSeeder } from './seeder.concert';
 import TypeOrmConfig from 'src/common/config/type.orm.config';
 import { ConfigModule } from '@nestjs/config';
+import { UserSeeder } from './seeder.user';
+import { UserModule } from 'src/domain/user/user.module';
 
 seeder({
   imports: [
@@ -14,7 +16,7 @@ seeder({
       load: [TypeOrmConfig],
     }),
     TypeOrmModule.forRootAsync(TypeOrmConfig.asProvider()),
-    TypeOrmModule.forFeature([ConcertEntity]),
     ConcertModule,
+    UserModule,
   ],
-}).run([ConcertSeeder]);
+}).run([UserSeeder, ConcertSeeder]);
