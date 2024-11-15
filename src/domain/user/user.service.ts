@@ -8,7 +8,9 @@ export class UserService {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async getUserById(id: number) {
-    return await this.userRepository.getUserById(id);
+  async getUserById(id: string) {
+    const userId = Number(id);
+
+    return await this.userRepository.getUserById(userId);
   }
 }

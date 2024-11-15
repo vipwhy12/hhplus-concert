@@ -1,7 +1,17 @@
-import { UserRepository } from './../../../domain/user/user.repository';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UsersEntity } from 'src/domain/user/entities/user.entity';
+import { UserRepository } from 'src/domain/user/user.repository';
+import { Repository } from 'typeorm';
 
+@Injectable()
 export class UserRepositoryImple implements UserRepository {
+  constructor(
+    @InjectRepository(UsersEntity)
+    private readonly user: Repository<UsersEntity>,
+  ) {}
+
   getUserById(id: number) {
-    throw new Error('Method not implemented.');
+    return this.user.find({ where: { id } });
   }
 }
