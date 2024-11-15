@@ -8,7 +8,6 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import TypeOrmConfig from './common/config/type.orm.config';
 import RedisConfig from 'src/common/config/redis.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PaymentModule } from './domain/payment/payment.module';
 
 @Module({
   imports: [
@@ -20,7 +19,6 @@ import { PaymentModule } from './domain/payment/payment.module';
     TypeOrmModule.forRootAsync(TypeOrmConfig.asProvider()),
     DomainModule,
     InfrastructureModule,
-    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
