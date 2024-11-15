@@ -1,12 +1,12 @@
 import { ConcertService } from './concert.service';
 import { ConcertEntity } from './entities/concert.entity';
 import { ConcertController } from './concert.controller';
-import { ConcertSessionEntity } from './entities/concert.session.entity';
 import { CONCERT_REPOSITORY } from './concert.repository';
 import { Module } from '@nestjs/common';
 import { SeatEntity } from './entities/seat.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConcertRepositoryImpl } from 'src/infrastructure/database/concert/concert.repository.impl';
+import { ConcertSessionEntity } from './entities/concert.session.entity';
 
 @Module({
   imports: [
