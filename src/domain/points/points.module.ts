@@ -4,6 +4,7 @@ import { PointsService } from './points.service';
 import { PointsRepositoryImple } from 'src/infrastructure/database/user/point/point.repository.imple';
 import { PointEntity } from './entities/point.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { POINTS_REPOSITORY } from './points.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PointEntity])],
@@ -11,10 +12,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [
     PointsService,
     {
-      provide: 'POINTS_REPOSITORY',
+      provide: POINTS_REPOSITORY,
       useClass: PointsRepositoryImple,
     },
   ],
-  exports: [],
+  exports: [POINTS_REPOSITORY],
 })
 export class PointsModule {}
