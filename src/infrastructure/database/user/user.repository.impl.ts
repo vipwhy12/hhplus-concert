@@ -14,4 +14,14 @@ export class UserRepositoryImple implements UserRepository {
   getUserById(id: number) {
     return this.user.find({ where: { id } });
   }
+
+  insert(
+    user: Record<string, import('nestjs-seeder').FactoryValue>[],
+  ): Promise<any> {
+    return this.user.save(user);
+  }
+
+  delete(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
 }
