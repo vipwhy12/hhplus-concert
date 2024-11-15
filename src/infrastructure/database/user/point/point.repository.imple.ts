@@ -27,4 +27,12 @@ export class PointsRepositoryImple implements PointsRepository {
 
     return pointRepository.update({ userId }, { balance });
   }
+
+  insert(point: Record<string, import('nestjs-seeder').FactoryValue>[]) {
+    return this.point.save(point);
+  }
+
+  delete(arg0: {}) {
+    throw new Error('Method not implemented.');
+  }
 }
