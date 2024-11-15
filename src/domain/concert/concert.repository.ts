@@ -11,7 +11,15 @@ export interface ConcertRepository {
 
   getReservableConcertSession(concertId: number);
 
-  insert(concert: Record<string, import('nestjs-seeder').FactoryValue>[]);
+  insertConcert(
+    concert: Record<string, import('nestjs-seeder').FactoryValue>[],
+  );
+
+  insertSession(
+    session: Record<string, import('nestjs-seeder').FactoryValue>[],
+  );
+
+  insertSeat(seat: Record<string, import('nestjs-seeder').FactoryValue>[]);
 
   delete(arg0);
 }

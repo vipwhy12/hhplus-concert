@@ -49,10 +49,22 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     Dummy Data
   */
 
-  insert(
+  insertConcert(
     concert: Record<string, import('nestjs-seeder').FactoryValue>[],
   ): Promise<any> {
     return this.concert.save(concert);
+  }
+
+  insertSession(
+    session: Record<string, import('nestjs-seeder').FactoryValue>[],
+  ): Promise<any> {
+    return this.concertSessions.save(session);
+  }
+
+  insertSeat(
+    seat: Record<string, import('nestjs-seeder').FactoryValue>[],
+  ): Promise<any> {
+    return this.seat.save(seat);
   }
 
   delete(arg0: any): Promise<any> {
