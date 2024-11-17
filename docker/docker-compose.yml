@@ -1,0 +1,13 @@
+services:
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6379:6379
+      - 8001:8001 # Redis Insight 포트
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local
