@@ -18,7 +18,7 @@ export class UserRepositoryImple implements UserRepository {
   insert(
     user: Record<string, import('nestjs-seeder').FactoryValue>[],
   ): Promise<any> {
-    return this.user.save(user);
+    return this.user.insert(user);
   }
 
   delete(arg0: any) {
