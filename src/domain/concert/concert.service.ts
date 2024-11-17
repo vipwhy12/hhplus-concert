@@ -26,6 +26,8 @@ export class ConcertService {
   async reservableSeat(seatId: number, manager?: EntityManager) {
     const seat = await this.concertRepository.getSeatById(seatId, manager);
 
+    console.log(seat);
+
     if (seat.isReserved) {
       throw new Error('이미 예약된 좌석입니다.');
     }

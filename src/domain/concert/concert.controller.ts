@@ -17,8 +17,10 @@ export class ConcertController {
   /**
    * 특정 콘서트의 예약 가능 날짜 조회
    */
-  @Get(':concertId/sessions')
-  async reservableConcertSession(@Param('sessionId') sessionId: number) {
-    return await this.concertService.reservableConcertSession(sessionId);
+  @Get(':concertId/sessions/:sessionId')
+  async reservableConcertSession(@Param('sessionId') sessionId: string) {
+    return await this.concertService.reservableConcertSession(
+      Number(sessionId),
+    );
   }
 }
