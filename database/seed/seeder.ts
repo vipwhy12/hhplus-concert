@@ -12,6 +12,7 @@ import { PointSeeder } from './point/seeder.point';
 import { ReservationSeeder } from './reservation/seeder.reservation';
 import { UserSeeder } from './user/user.seeder';
 import { UsersEntity } from 'src/domain/user/entities/user.entity';
+import { ReservationEntity } from 'src/domain/reservation/entities/reservation.entity';
 
 seeder({
   imports: [
@@ -21,16 +22,16 @@ seeder({
       load: [TypeOrmConfig],
     }),
     TypeOrmModule.forRootAsync(TypeOrmConfig.asProvider()),
-    TypeOrmModule.forFeature([UsersEntity]),
+    TypeOrmModule.forFeature([UsersEntity, ReservationEntity]),
     ConcertModule,
     UserModule,
     PointsModule,
     ReservationModule,
   ],
 }).run([
-  UserSeeder,
-  ConcertSeeder,
-  ConcertSessionSeeder,
-  PointSeeder,
+  // UserSeeder,
+  // ConcertSeeder,
+  // ConcertSessionSeeder,
+  // PointSeeder,
   ReservationSeeder,
 ]);
