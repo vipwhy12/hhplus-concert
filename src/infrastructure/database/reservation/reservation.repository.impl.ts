@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReservationEntity } from 'src/domain/reservation/entities/reservation.entity';
@@ -12,6 +11,12 @@ export class ReservationRepositoryImpl implements ReservationRepository {
     @InjectRepository(ReservationEntity)
     private readonly reservation: Repository<ReservationEntity>,
   ) {}
+  delete(arg0: {}): unknown {
+    throw new Error('Method not implemented.');
+  }
+  insert(reservation: Record<string, import('nestjs-seeder').FactoryValue>[]) {
+    return this.reservation.save(reservation);
+  }
 
   createReservation(
     concertSessionId: number,
