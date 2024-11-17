@@ -19,14 +19,12 @@ export class ConcertService {
     );
   }
 
-  async reservableConcertSession(concertId: number) {
+  async reservableConcertSession(concertId: string) {
     return await this.concertRepository.getReservableConcertSession(concertId);
   }
 
-  async reservableSeat(seatId: number, manager?: EntityManager) {
+  async reservableSeat(seatId: string, manager?: EntityManager) {
     const seat = await this.concertRepository.getSeatById(seatId, manager);
-
-    console.log(seat);
 
     if (seat.isReserved) {
       throw new Error('이미 예약된 좌석입니다.');
@@ -35,7 +33,7 @@ export class ConcertService {
   }
 
   async updateSeatStatus(
-    seatId: number,
+    seatId: string,
     status: boolean,
     manager?: EntityManager,
   ) {

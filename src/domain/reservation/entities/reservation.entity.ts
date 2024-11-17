@@ -8,13 +8,13 @@ import {
 @Entity('reservations')
 export class ReservationEntity extends BaseEntity {
   @Column()
-  userId: number;
+  userId: string;
 
   @Column()
-  seatId: number;
+  seatId: string;
 
   @Column()
-  concertSessionId: number;
+  concertSessionId: string;
 
   @Column()
   status: ReservationStateType = ReservationState.PENDING;

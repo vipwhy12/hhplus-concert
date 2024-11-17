@@ -9,8 +9,6 @@ export class UserService {
   ) {}
 
   async getUserById(id: string) {
-    const userId = Number(id);
-
-    return await this.userRepository.getUserById(userId);
+    return await this.userRepository.getUserById(id);
   }
 }

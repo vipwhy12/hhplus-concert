@@ -1,15 +1,15 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class ReserationSeatRequestDto {
   @IsNotEmpty()
-  @IsNumber()
-  sessionId: number;
+  @IsString()
+  sessionId: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  userId: number;
+  @IsString()
+  userId: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  seatId: number;
+  @IsString()
+  seatId: string;
 }

@@ -2,10 +2,7 @@ import { EntityManager } from 'typeorm';
 
 export const POINTS_REPOSITORY = 'POINTS_REPOSITORY';
 export interface PointsRepository {
-  insert(user: Record<string, import('nestjs-seeder').FactoryValue>[]): unknown;
-  findByUserId(userId: number, manager?: EntityManager);
+  findByUserId(userId: string, manager?: EntityManager);
 
-  update(userId: number, balance: number, manager?: EntityManager);
-
-  delete(arg0: {});
+  update(userId: string, balance: number, manager?: EntityManager);
 }

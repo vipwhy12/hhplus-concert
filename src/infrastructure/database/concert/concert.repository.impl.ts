@@ -22,7 +22,7 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     private readonly seat: Repository<SeatEntity>,
   ) {}
 
-  getSeatById(id: number, manager?: EntityManager) {
+  getSeatById(id: string, manager?: EntityManager) {
     const sessionRepository = manager
       ? manager.getRepository(SeatEntity)
       : this.seat;
@@ -32,7 +32,7 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     });
   }
 
-  updateSeatStatus(id: number, isReserved: boolean, manager: EntityManager) {
+  updateSeatStatus(id: string, isReserved: boolean, manager: EntityManager) {
     const sessionRepository = manager
       ? manager.getRepository(SeatEntity)
       : this.seat;
@@ -44,7 +44,7 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     return this.concert.find();
   }
 
-  async getReservableConcertSession(concertId: number) {
+  async getReservableConcertSession(concertId: string) {
     const now = new Date();
     return this.concertSessions.find({
       where: {

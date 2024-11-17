@@ -19,8 +19,6 @@ export class ConcertController {
    */
   @Get(':concertId/sessions/:sessionId')
   async reservableConcertSession(@Param('sessionId') sessionId: string) {
-    return await this.concertService.reservableConcertSession(
-      Number(sessionId),
-    );
+    return await this.concertService.reservableConcertSession(sessionId);
   }
 }
