@@ -19,6 +19,6 @@ import { ReservationFacade } from './reservation.facade';
       useClass: ReservationRepositoryImpl,
     },
   ],
-  exports: [RESERVATION_REPOSITORY],
+  exports: [],
 })
 export class ReservationModule {}
