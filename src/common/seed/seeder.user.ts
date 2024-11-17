@@ -16,10 +16,23 @@ export class UserSeeder implements Seeder {
   ) {}
 
   async seed() {
-    const dataCount = this.configService.get<number>('SEED_DATA_COUNT');
-    const user = DataFactory.createForClass(UsersEntity).generate(dataCount);
+    const totalCount = this.configService.get<number>('SEED_DATA_COUNT'); // 총 데이터 개수
+    const batchSize = 1000; // 한 번에 처리할 데이터 개수
+    const totalBatches = Math.ceil(totalCount / batchSize); // 필요한 배치 수 계산
 
-    await this.userRepository.insert(user);
+    for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+      const currentBatchSize = Math.min(
+        batchSize,
+        totalCount - batchIndex * batchSize,
+      );
+
+      const batchData =
+        DataFactory.createForClass(UsersEntity).generate(currentBatchSize);
+
+      await this.userRepository.insert(batchData);
+
+      console.log(`Batch ${batchIndex + 1}/${totalBatches} inserted`);
+    }
   }
 
   drop() {
