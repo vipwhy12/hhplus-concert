@@ -1,4 +1,18 @@
 services:
+  database:
+    container_name: mysql
+    image: mysql:9.1.0
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    environment: # 환경 변수 설정
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: concert
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+
   redis:
     container_name: redis
     image: redis
