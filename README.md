@@ -1,85 +1,72 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎸 1. 콘서트 예약 서비스
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+콘서트 예약 서비스는 사용자가 콘서트 좌석을 예약하고 결제할 수 있는 기능을 제공하는 시스템입니다.  
+이 서비스는 `공정한 대기열 시스템`, `좌석 예약 보호 기능`, `포인트 기반 결제 시스템` 등을 포함합니다.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 1.1 주요 기능
 
-## Description
+- **[결제 시스템]** 유저는 선택한 좌석을 포인트로 결제할 수 있습니다.
+- **[대기열 시스템]** 예약 요청이 순차적으로 처리되어 모든 요청이 공정하게 관리됩니다.
+- **[포인트 시스템]** 유저는 자신의 계정에 포인트를 충전하여 콘서트 티켓 결제 시 사용할 수 있습니다.
+- **[좌석 예약 보호]** 예약 요청 후 일정 시간 동안 결제가 이루어지지 않더라도, 해당 좌석은 다른 유저가 예약할 수 없습니다. 시간 초과 시 좌석은 다른 유저에게 다시 예약 가능해집니다.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  <br>
 
-## Project setup
+# 2. 콘서트 예약 서비스의 아키텍처
 
-```bash
-$ npm install
-```
+이 서비스는 레이어드 아키텍처를 기반으로 설계되었습니다. 각 계층은 특정 역할을 수행하며, 시스템의 유연성과 확장성을 극대화하도록 설계되었습니다.
 
-## Compile and run the project
+## 2.1 Presentation Layer
 
-```bash
-# development
-$ npm run start
+- **폴더 구조**: `/src/interfaces`
+- 이 계층은 사용자와 외부 시스템 간의 상호작용을 처리하는 역할을 합니다.  
+  사용자의 요청을 받아 `Application Layer`로 전달하며, 결과를 반환합니다.
+- 스케줄러가 이 계층에 속한 이유는, 외부 요청이나 주기적인 작업(예: 대기열 상태 업데이트)을 통해 사용자에게 실시간으로 시스템 상태를 반영해야 하기 때문입니다.
+  - 이 작업은 외부 시스템(Redis 같은 캐시 시스템)과의 상호작용을 통해 최적화될 수 있으며, 사용자 경험을 개선하기 위해 실시간 데이터 처리가 필요한 시나리오에서 적합합니다.
 
-# watch mode
-$ npm run start:dev
+## 2.2 Application Layer
 
-# production mode
-$ npm run start:prod
-```
+- **폴더 구조**: `/src/application`
+- 파사드 패턴을 사용하여 프레젠테이션 계층과 도메인 계층을 연결합니다.  
+  여러 도메인 서비스(예: 예약, 포인트)를 조합하여 외부 클라이언트가 간단하게 비즈니스 로직을 처리할 수 있도록 합니다.
+- 파사드 패턴을 사용한 이유는 **도메인 계층의 복잡성을 숨기고**, 외부에서 간단하게 사용할 수 있는 통합된 인터페이스를 제공하기 위해서입니다.
+  - 여러 서비스가 조합되어 외부 클라이언트가 한 번의 호출로 여러 작업을 처리할 수 있습니다.
+  - 파사드는 각 도메인 서비스의 내부 로직이 변경되더라도 클라이언트가 영향을 받지 않도록 보호하는 역할을 합니다.
 
-## Run tests
+## 2.3 Domain Layer
 
-```bash
-# unit tests
-$ npm run test
+- **폴더 구조**: `/src/domain`
+- 시스템의 핵심 비즈니스 로직을 포함하며, 비즈니스 규칙을 처리하는 코드를 포함합니다.
+- 이 계층은 시스템의 **핵심 비즈니스 로직**을 포함하고, 비즈니스 규칙을 처리하는 코드가 포함됩니다.
 
-# e2e tests
-$ npm run test:e2e
+- 도메인 계층에서 레포지토리 패턴을 사용하여 인프라스트럭처 계층을 추상화한 이유는 결합도를 낮추기 위해서입니다.
+  - 도메인 로직은 데이터베이스나 외부 API에 직접 의존하지 않도록 설계되어야 하며, 이를 통해 시스템은 더 유연하게 변경되거나 확장될 수 있습니다.
+    - 예를 들어, 데이터베이스를 변경하거나 외부 시스템과의 상호작용을 바꾸더라도 도메인 로직은 그대로 유지됩니다.
 
-# test coverage
-$ npm run test:cov
-```
+## 2.4 Infrastructure Layer
 
-## Resources
+- **폴더 구조**: `/src/infrastructure`
+- 도메인 계층과의 의존성을 낮추기 위해, 인프라스트럭처 계층은 레포지토리 패턴을 통해 도메인 계층과 상호작용하며, 이를 통해 시스템의 유연성을 높였습니다.
+- 이 계층은 기술적인 구현과 관련된 부분을 관리하며, 도메인 계층은 오직 비즈니스 로직에만 집중할 수 있도록 돕습니다.
 
-Check out a few resources that may come in handy when working with NestJS:
+  <br>
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# 3. 기술 스택
 
-## Support
+- **Backend**: `Node.js`, `NestJS`
+- **Database**: `MySql`, `Redis`
+- **Testing**: `Jest`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+  <br>
 
-## Stay in touch
+# 4. 보고서
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 설계
 
-## License
+- 📎 [API 명세서](https://github.com/vipwhy12/hhplus-concert/blob/main/docs/api/api.specification.md)
+- 📎 [시퀀스 다이어그램](https://github.com/vipwhy12/hhplus-concert/blob/main/docs/architectural/sequence.diagram.md)
+- 📎 [ER 다이어그램](https://github.com/vipwhy12/hhplus-concert/blob/main/docs/database/entity.relationship.diagram.md)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 성능개선
+
+- 📎 [쿼리 개선 보고서]()
