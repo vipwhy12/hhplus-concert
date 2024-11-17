@@ -11,7 +11,7 @@ export class ReservationFacade {
     private readonly reservationService: ReservationService,
   ) {}
 
-  async reservationSeat(sessionId: number, userId: number, seatId: number) {
+  async reservationSeat(sessionId: string, userId: string, seatId: string) {
     await this.datasoure.transaction(async (manager) => {
       const status = true;
       const { price } = await this.concertService.reservableSeat(

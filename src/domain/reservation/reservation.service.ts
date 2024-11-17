@@ -13,9 +13,9 @@ export class ReservationService {
   ) {}
 
   async createReservation(
-    sessionId: number,
-    userId: number,
-    seatId: number,
+    sessionId: string,
+    userId: string,
+    seatId: string,
     price: number,
     manager?: EntityManager,
   ) {

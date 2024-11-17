@@ -5,10 +5,9 @@ import { faker } from '@faker-js/faker';
 export const FctoryReservationEntity = (): ReservationEntity => {
   const reservation = new ReservationEntity();
 
-  reservation.userId = faker.number.int({ min: 10, max: 100 });
-  reservation.seatId = faker.number.int({ min: 10, max: 100 });
-  reservation.concertSessionId = faker.number.int({ min: 10, max: 100 });
+  reservation.userId = faker.string.uuid();
+  reservation.seatId = faker.string.uuid();
+  reservation.concertSessionId = faker.string.uuid();
   reservation.status = ReservationState.PENDING;
-
   return reservation;
 };

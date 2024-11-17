@@ -11,17 +11,7 @@ export class UserRepositoryImple implements UserRepository {
     private readonly user: Repository<UsersEntity>,
   ) {}
 
-  getUserById(id: number) {
+  getUserById(id: string) {
     return this.user.find({ where: { id } });
-  }
-
-  insert(
-    user: Record<string, import('nestjs-seeder').FactoryValue>[],
-  ): Promise<any> {
-    return this.user.insert(user);
-  }
-
-  delete(arg0: any) {
-    throw new Error('Method not implemented.');
   }
 }

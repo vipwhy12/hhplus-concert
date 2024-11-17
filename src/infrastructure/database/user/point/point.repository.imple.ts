@@ -12,7 +12,7 @@ export class PointsRepositoryImple implements PointsRepository {
     private readonly point: Repository<PointEntity>,
   ) {}
 
-  async findByUserId(id: number, manager?: EntityManager) {
+  async findByUserId(id: string, manager?: EntityManager) {
     const pointRepository = manager
       ? manager.getRepository(PointEntity)
       : this.point;
@@ -20,19 +20,11 @@ export class PointsRepositoryImple implements PointsRepository {
     return pointRepository.findOne({ where: { id } });
   }
 
-  async update(userId: number, balance: number, manager?: EntityManager) {
+  async update(userId: string, balance: number, manager?: EntityManager) {
     const pointRepository = manager
       ? manager.getRepository(PointEntity)
       : this.point;
 
     return pointRepository.update({ userId }, { balance });
-  }
-
-  insert(point: Record<string, import('nestjs-seeder').FactoryValue>[]) {
-    return this.point.save(point);
-  }
-
-  delete(arg0: {}) {
-    throw new Error('Method not implemented.');
   }
 }

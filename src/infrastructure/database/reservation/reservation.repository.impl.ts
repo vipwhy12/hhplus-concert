@@ -11,17 +11,11 @@ export class ReservationRepositoryImpl implements ReservationRepository {
     @InjectRepository(ReservationEntity)
     private readonly reservation: Repository<ReservationEntity>,
   ) {}
-  delete(arg0: {}): unknown {
-    throw new Error('Method not implemented.');
-  }
-  insert(reservation: Record<string, import('nestjs-seeder').FactoryValue>[]) {
-    return this.reservation.save(reservation);
-  }
 
   createReservation(
-    concertSessionId: number,
-    userId: number,
-    seatId: number,
+    concertSessionId: string,
+    userId: string,
+    seatId: string,
     price: number,
     manager?: EntityManager,
   ) {

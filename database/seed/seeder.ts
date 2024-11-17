@@ -6,13 +6,10 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from 'src/domain/user/user.module';
 import { PointsModule } from 'src/domain/points/points.module';
 import { ReservationModule } from 'src/domain/reservation/reservation.module';
-import { ConcertSeeder } from './concert/seeder.concert';
-import { ConcertSessionSeeder } from './concert/seeder.concert.session';
-import { PointSeeder } from './point/seeder.point';
-import { ReservationSeeder } from './reservation/seeder.reservation';
-import { UserSeeder } from './user/user.seeder';
 import { UsersEntity } from 'src/domain/user/entities/user.entity';
 import { ReservationEntity } from 'src/domain/reservation/entities/reservation.entity';
+import { UserSeeder } from './user/user.seeder';
+import { ReservationSeeder } from './reservation/reservation.seeder';
 
 seeder({
   imports: [
@@ -29,9 +26,9 @@ seeder({
     ReservationModule,
   ],
 }).run([
-  // UserSeeder,
+  UserSeeder,
+  ReservationSeeder,
   // ConcertSeeder,
   // ConcertSessionSeeder,
   // PointSeeder,
-  ReservationSeeder,
 ]);
