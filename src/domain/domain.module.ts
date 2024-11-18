@@ -4,6 +4,7 @@ import { ConcertModule } from './concert/concert.module';
 import { UserModule } from './user/user.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { PointsModule } from './points/points.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PointsModule } from './points/points.module';
     UserModule,
     ReservationModule,
     PointsModule,
+    PaymentsModule,
   ],
 })
 export class DomainModule {}
