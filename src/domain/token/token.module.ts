@@ -13,5 +13,6 @@ import { RedisTokenRepository } from 'src/infrastructure/cache/token/redis.token
       useClass: RedisTokenRepository,
     },
   ],
+  exports: [TokenService],
 })
 export class TokenModule {}
