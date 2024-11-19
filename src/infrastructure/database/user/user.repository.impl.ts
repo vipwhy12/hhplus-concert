@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersEntity } from 'src/domain/user/entities/user.entity';
 import { UserRepository } from 'src/domain/user/user.repository';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class UserRepositoryImple implements UserRepository {
@@ -11,7 +11,9 @@ export class UserRepositoryImple implements UserRepository {
     private readonly user: Repository<UsersEntity>,
   ) {}
 
-  getUserById(id: string) {
-    return this.user.find({ where: { id } });
+  getUserById(id: string, manager: EntityManager) {
+    const repository = manager ? manager.getRepository(UsersEntity) : this.user;
+
+    return repository.findOne({ where: { id } });
   }
 }
