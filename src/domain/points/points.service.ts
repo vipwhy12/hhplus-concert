@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { POINTS_REPOSITORY, PointsRepository } from './points.repository';
-import { DataSource } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 
 @Injectable()
 export class PointsService {
@@ -19,9 +19,13 @@ export class PointsService {
       const myPoint = await this.pointsRepository.findByUserId(id, manager);
       const updatedBalance = myPoint.balance + balance;
 
-      return await this.pointsRepository.update(id, updatedBalance, manager);
+      return await this.updateBalance(id, updatedBalance, manager);
     });
 
     return updateBalance;
+  }
+
+  async updateBalance(id: string, balance: number, manager?: EntityManager) {
+    return await this.pointsRepository.update(id, balance, manager);
   }
 }
