@@ -6,6 +6,9 @@ import { TokenRequestDto } from './dtos/request/token.request.dto';
 export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
+  /**
+   * 대기열: 대기 토큰 발급 후 대기열 등록
+   */
   @Post()
   async registerInQueue(
     @Body() tokenRequestDto: TokenRequestDto,

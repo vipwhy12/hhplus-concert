@@ -3,21 +3,40 @@ import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'concert_sessions' })
 export class ConcertSessionEntity extends BaseEntity {
-  @Column()
+  @Column({
+    type: 'datetime',
+    comment: '콘서트 시작 시간',
+  })
   startAt: Date;
 
-  @Column()
+  @Column({
+    type: 'datetime',
+    comment: '콘서트 마감 시간',
+  })
   endAt: Date;
 
-  @Column()
+  @Column({
+    type: 'datetime',
+    comment: '콘서트 예약 가능 시간',
+  })
   startReservationAt: Date;
 
-  @Column()
+  @Column({
+    type: 'datetime',
+    comment: '콘서트 예약 마감 시간',
+  })
   endReservationAt: Date;
 
-  @Column()
+  @Column({
+    type: 'int',
+    comment: '최대 관객 수',
+  })
   maxAudienceCount: number;
 
-  @Column()
+  @Column({
+    length: 36,
+    name: 'concert_id',
+    comment: '최대 관객 수',
+  })
   concertId: string;
 }
