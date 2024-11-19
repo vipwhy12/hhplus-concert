@@ -31,4 +31,14 @@ export class ReservationRepositoryImpl implements ReservationRepository {
       status: ReservationState.PENDING,
     });
   }
+
+  async getReservationById(id: string, manager?: EntityManager) {
+    const reservationRepository = manager
+      ? manager.getRepository(ReservationEntity)
+      : this.reservation;
+
+    return reservationRepository.findOne({
+      where: { id },
+    });
+  }
 }

@@ -11,6 +11,7 @@ import { ReservationFacade } from './reservation.facade';
 @Module({
   imports: [TypeOrmModule.forFeature([ReservationEntity]), ConcertModule],
   controllers: [ReservationController],
+  exports: [ReservationService],
   providers: [
     ReservationFacade,
     ReservationService,
@@ -19,6 +20,5 @@ import { ReservationFacade } from './reservation.facade';
       useClass: ReservationRepositoryImpl,
     },
   ],
-  exports: [],
 })
 export class ReservationModule {}

@@ -20,4 +20,8 @@ export class TokenService {
 
     return myToken;
   }
+
+  async expireWaitingToken(token: number): Promise<void> {
+    await this.tokenRepository.expireWaitingToken(token);
+  }
 }

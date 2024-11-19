@@ -12,6 +12,17 @@ export class ReservationService {
     private readonly reservationRepository: ReservationRepository,
   ) {}
 
+  async getReservationById(id: string, manager?: EntityManager) {
+    const reservation = await this.reservationRepository.getReservationById(
+      id,
+      manager,
+    );
+
+    if (!reservation) {
+      throw new Error('예약 정보가 없습니다');
+    }
+  }
+
   async createReservation(
     sessionId: string,
     userId: string,
