@@ -8,6 +8,7 @@ import { POINTS_REPOSITORY } from './points.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PointEntity])],
+  exports: [PointsService],
   controllers: [PointsController],
   providers: [
     PointsService,
@@ -16,6 +17,5 @@ import { POINTS_REPOSITORY } from './points.repository';
       useClass: PointsRepositoryImple,
     },
   ],
-  exports: [POINTS_REPOSITORY],
 })
 export class PointsModule {}
