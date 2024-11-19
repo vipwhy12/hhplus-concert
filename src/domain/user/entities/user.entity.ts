@@ -3,6 +3,9 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('users')
 export class UsersEntity extends BaseEntity {
-  @Column('varchar', { length: 255 })
+  @Column({
+    length: 255,
+    comment: '사용자 이름',
+  })
   name: string;
 }

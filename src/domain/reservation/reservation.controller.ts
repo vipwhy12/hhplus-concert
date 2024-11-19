@@ -6,11 +6,15 @@ import { ReservationFacade } from './reservation.facade';
 export class ReservationController {
   constructor(private readonly reservationFacade: ReservationFacade) {}
 
+  /**
+   * 좌석 예약
+   */
   @Post()
   async reservationSeat(
     @Body() reservationSeatRequest: ReserationSeatRequestDto,
   ) {
     const { sessionId, userId, seatId } = reservationSeatRequest;
+
     return this.reservationFacade.reservationSeat(sessionId, userId, seatId);
   }
 }

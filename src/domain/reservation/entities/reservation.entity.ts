@@ -7,15 +7,30 @@ import {
 
 @Entity('reservations')
 export class ReservationEntity extends BaseEntity {
-  @Column()
+  @Column({
+    length: 36,
+    name: 'user_id',
+    comment: '사용자 식별자',
+  })
   userId: string;
 
-  @Column()
+  @Column({
+    length: 36,
+    name: 'seat_id',
+    comment: '좌석 식별자',
+  })
   seatId: string;
 
-  @Column()
+  @Column({
+    length: 36,
+    name: 'concert_session_id',
+    comment: '콘서트 세션 식별자',
+  })
   concertSessionId: string;
 
-  @Column()
+  @Column({
+    default: ReservationState.PENDING,
+    comment: '예약 상태',
+  })
   status: ReservationStateType = ReservationState.PENDING;
 }
