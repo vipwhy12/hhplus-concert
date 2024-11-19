@@ -1,4 +1,5 @@
 import TypeOrmConfig from 'src/common/config/type.orm.config';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { seeder } from 'nestjs-seeder';
 import { ConfigModule } from '@nestjs/config';
